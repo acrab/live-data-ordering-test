@@ -6,36 +6,16 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
-//@RunWith(AndroidJUnit4::class)
-//class ObserverFragment_Before : BaseTest() {
-//    @Before
-//    fun setup() {
-//        data = MutableLiveData(emptyList())
-//        data.value = listOf(ListItem("FIRST"))
-//        standardSetup<ListFragmentWithObserver>()
-//    }
-//}
-//
-//@RunWith(AndroidJUnit4::class)
-//class ObserverFragment_BeforeNoInit : BaseTest() {
-//    @Before
-//    fun setup() {
-//        data = MutableLiveData()
-//        data.value = listOf(ListItem("FIRST"))
-//        standardSetup<ListFragmentWithObserver>()
-//    }
-//}
+@RunWith(Suite::class)
+@Suite.SuiteClasses(TestWithConstructorData::class, TestWithoutConstructorData::class)
+class WithThenWithout
 
 @RunWith(Suite::class)
-@Suite.SuiteClasses(ObserverFragment_After::class, ObserverFragment_AfterNoInit::class)
-class ObserverTests
-
-@RunWith(Suite::class)
-@Suite.SuiteClasses(ObserverFragment_AfterNoInit::class, ObserverFragment_After::class)
-class ObserverTestsBackwards
+@Suite.SuiteClasses(TestWithoutConstructorData::class, TestWithConstructorData::class)
+class WithoutThenWith
 
 @RunWith(AndroidJUnit4::class)
-class ObserverFragment_After : BaseTest() {
+class TestWithConstructorData : BaseTest() {
     @Before
     fun setup() {
         data = MutableLiveData(emptyList())
@@ -45,7 +25,7 @@ class ObserverFragment_After : BaseTest() {
 }
 
 @RunWith(AndroidJUnit4::class)
-class ObserverFragment_AfterNoInit : BaseTest() {
+class TestWithoutConstructorData : BaseTest() {
     @Before
     fun setup() {
         data = MutableLiveData()

@@ -18,8 +18,6 @@ fun withRecyclerView(recyclerViewId: Int) = RecyclerViewMatcher(recyclerViewId)
  */
 class RecyclerViewMatcher(private val recyclerViewId: Int) {
 
-    fun atPosition(position: Int) = atPositionOnView(position, -1)
-
     fun atPositionOnView(position: Int, targetViewId: Int) = object : TypeSafeMatcher<View>() {
         var resources: Resources? = null
         var childView: View? = null
@@ -54,36 +52,18 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
                 }
             }
 
-            if (targetViewId == -1) {
-                return view === childView
+            return if (targetViewId == -1) {
+                view === childView
             } else {
                 val childView1 = childView
                 if (childView1 != null) {
                     val targetView = childView1.findViewById<View>(targetViewId)
-                    return view === targetView
+                    view === targetView
                 } else {
-                    return false
+                    false
                 }
 
             }
-        }
-    }
-}
-
-class RecyclerItemViewAssertion(private val position: Int, private val assertion: ViewAssertion) : ViewAssertion {
-
-    override fun check(view: View?, noViewFoundException: NoMatchingViewException?) {
-        val recyclerView = view as RecyclerView
-        val holder = recyclerView.findViewHolderForLayoutPosition(position)
-        if (holder == null) {
-            throw PerformException.Builder()
-                .withActionDescription(this.toString())
-                .withViewDescription(HumanReadables.describe(view))
-                .withCause(IllegalStateException("No view holder found at position $position"))
-                .build()
-        } else {
-            val viewAtPosition = holder.itemView
-            assertion.check(viewAtPosition, noViewFoundException)
         }
     }
 }

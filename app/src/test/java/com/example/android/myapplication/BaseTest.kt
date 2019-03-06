@@ -20,6 +20,7 @@ import com.example.android.myapplication.util.withRecyclerView
 import com.example.android.myapplication.util.withRowContaining
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.mock
 import org.junit.After
 import org.junit.Before
@@ -28,8 +29,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 abstract class BaseTest {
+
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
+
     protected lateinit var data: MutableLiveData<List<ListItem>>
     protected lateinit var scenario: FragmentScenario<*>
 
@@ -53,6 +56,7 @@ abstract class BaseTest {
 
     @Test
     fun oneItem() {
+                
         onView(withId(R.id.data_list))
             .perform(RecyclerViewActions.scrollToPosition<StringHolder>(0))
 
